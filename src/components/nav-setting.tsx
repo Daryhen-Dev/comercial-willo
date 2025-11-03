@@ -1,12 +1,21 @@
 "use client"
 
-import { ChevronRight, type LucideIcon } from "lucide-react"
+import {
+  ChevronRight,
+  Folder,
+  MoreHorizontal,
+  Share,
+  Trash2,
+  type LucideIcon,
+} from "lucide-react"
 
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible"
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -17,9 +26,12 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
+  useSidebar,
 } from "@/components/ui/sidebar"
+import { ModeToggle } from "./ui/mode-toggle"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible"
 
-export function NavMain({
+export function NavSetting({
   items,
 }: {
   items: {
@@ -33,17 +45,19 @@ export function NavMain({
     }[]
   }[]
 }) {
+  const { isMobile } = useSidebar()
+
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
-      <SidebarMenu>
+      <SidebarGroupLabel>Ajustes</SidebarGroupLabel>
+      <SidebarMenu >
         {items.map((item) => (
           <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip={item.title}>
+              <SidebarMenuButton asChild tooltip={item.title} className="flex items-center pt-6 pb-6">
                 <a href={item.url}>
                   <item.icon />
-                  <span>{item.title}</span>
+                  <span className="text-2xl font-bold">{item.title}</span>
                 </a>
               </SidebarMenuButton>
               {item.items?.length ? (
@@ -58,9 +72,9 @@ export function NavMain({
                     <SidebarMenuSub>
                       {item.items?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.title}>
-                          <SidebarMenuSubButton asChild>
+                          <SidebarMenuSubButton asChild className="pt-4 pb-4">
                             <a href={subItem.url}>
-                              <span>{subItem.title}</span>
+                              <span className="text-xl ml-5 mt-2 mb-2">{subItem.title}</span>
                             </a>
                           </SidebarMenuSubButton>
                         </SidebarMenuSubItem>
