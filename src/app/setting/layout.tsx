@@ -1,5 +1,6 @@
+import SideBarBodyPage from '@/components/sidebar/SideBarBodyPage';
 import React, { ReactNode } from 'react'
-import SideBarBodyPage from '../page';
+
 
 type LayoutProps = {
   children: ReactNode;
@@ -9,7 +10,7 @@ type LayoutProps = {
  const Layout = ({ children } : LayoutProps) => {
   return (
     <SideBarBodyPage>
-        <div>{children}</div>
+        {children}
     </SideBarBodyPage>
   )
 }

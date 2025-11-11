@@ -186,7 +186,7 @@ const data = {
       items: [
         {
           title: "Entrada",
-          url: "#",
+          url: "/setting",
         }
       ],
     }
