@@ -41,11 +41,8 @@ export const MainLogin = () => {
   });
 
   return (
-    <Card className="w-full max-w-xl p-5">
-        <CardTitle>Login to your account</CardTitle>
-        <CardDescription>
-          Enter your email below to login to your account
-        </CardDescription>
+    <Card className="flex flex-col w-full max-w-xl p-5">
+        <CardTitle className="text-center">Login</CardTitle>
       <Form {...form}>
         <form onSubmit={onSubmit} className="gap-5">
           <FormField
@@ -77,7 +74,7 @@ export const MainLogin = () => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="gap-10">
+          <Button type="submit" className="gap-10 mt-3">
             Login
           </Button>
         </form>
