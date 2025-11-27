@@ -1,4 +1,4 @@
-import SideBarBodyPage from '@/components/sidebar/SideBarBodyPage';
+import SideBarBodyPage from '@/components/ui/sidebar/SideBarBodyPage';
 import React, { ReactNode } from 'react'
 
 

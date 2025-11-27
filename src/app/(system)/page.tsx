@@ -17,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input"
 import React, { ReactNode } from 'react'
 import { Form } from "@/components/ui/form"
-import { MainLogin } from "./login/components/MainLogin"
+import { MainLogin } from "../login/components/MainLogin"
 
 
 

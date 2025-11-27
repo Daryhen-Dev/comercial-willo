@@ -1,9 +1,6 @@
 "use client";
 import {
   Card,
-  CardAction,
-  CardDescription,
-  CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import {
@@ -14,7 +11,7 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -41,8 +38,8 @@ export const MainLogin = () => {
     },
   });
 
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const Fetch = async (values: { usuario: string; password: string }): Promise<LoginResponse> => {
     try {

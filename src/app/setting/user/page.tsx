@@ -1,4 +1,4 @@
-import SideBarBodyPage from '@/app/page'
+import SideBarBodyPage from '@/app/(system)/page'
 import React from 'react'
 
 export default function UserPage ()  {

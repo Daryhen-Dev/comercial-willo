@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "./layout";
-import SideBarBodyPage from "../page";
+import SideBarBodyPage from "../(system)/page";
 import {
   Card,
   CardAction,

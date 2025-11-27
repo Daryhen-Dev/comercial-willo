@@ -1,10 +1,10 @@
 
 import React, { ReactNode } from 'react'
-import { SidebarInset, SidebarProvider, SidebarTrigger } from '../ui/sidebar';
-import { AppSidebar } from '../app-sidebar';
+import { SidebarInset, SidebarProvider, SidebarTrigger } from '../sidebar';
+import { AppSidebar } from '../../app-sidebar';
 import { Separator } from '@radix-ui/react-separator';
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '../ui/breadcrumb';
-import { ModeToggle } from '../ui/mode-toggle';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '../breadcrumb';
+import { ModeToggle } from '../mode-toggle';
 
 type LayoutProps = {
   children: ReactNode;
