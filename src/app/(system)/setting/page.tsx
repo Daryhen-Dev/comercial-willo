@@ -11,7 +11,7 @@ const Setting = () => {
         <Title title="Bancos" />
         <FieldSeparator />
         <div className="grid grid-cols-1 gap-4 place-content-center place-items-center md:grid-cols-2 lg:grid-cols-3">
-          <ItemLink title="ACTIVAR BANCO" link="/setting/bank" icon={Landmark} />
+          <ItemLink title="ACTIVAR BANCO" link="/setting/bank_activar" icon={Landmark} />
           <ItemLink title="NUMERACION DE CHEQUE" link="/setting/bank" icon={Banknote} />
           <ItemLink title="VALOR MAXIMO DE CHEQUE" link="/setting/bank" icon={BanknoteArrowUp} />
         </div>
