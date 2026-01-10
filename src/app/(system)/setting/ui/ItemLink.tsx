@@ -13,7 +13,7 @@ export const ItemLink = ({ title, link, icon: Icon }: ItemLinkProps) => {
 
 
     return (
-        <Link href={link} className="flex flex-col justify-center gap-3 items-center h-20 bg-gray-600 w-full rounded-sm">
+        <Link href={link} className="flex flex-col justify-center gap-3 items-center h-23 bg-card text-card-foreground border border-border hover:bg-accent hover:text-accent-foreground transition-colors w-full rounded-sm">
             <Icon size={35} strokeWidth={1.5} />
             <span>{title}</span>
         </Link>

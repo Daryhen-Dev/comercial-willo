@@ -9,7 +9,14 @@ import {
   useReactTable,
   SortingState,
   getSortedRowModel,
+  RowData,
 } from "@tanstack/react-table";
+
+declare module "@tanstack/table-core" {
+  interface TableMeta<TData extends RowData> {
+    refreshData: () => void;
+  }
+}
 
 import {
   Table,
@@ -25,11 +32,13 @@ import { Input } from "@/components/ui/input";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  refreshData: () => void;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  refreshData,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -45,6 +54,9 @@ export function DataTable<TData, TValue>({
     state: {
       sorting,
       columnFilters,
+    },
+    meta: {
+      refreshData,
     },
   });
 

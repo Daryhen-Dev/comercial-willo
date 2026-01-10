@@ -1,6 +1,6 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, Table } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import {
   DropdownMenu,
@@ -11,13 +11,20 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { BankActivarActionInterface } from "./interfaces/bank_activar_action_interface";
 import SheetCustom from "@/components/ui/sheet/sheetCustom";
 import { useState } from "react";
-import EditUserForm from "./ui/EditUserForm";
+import { UserGetAllInterface } from "../../../../../interfaces/settings/user_action_interface";
+import EditUserForm from "../ui/EditUserForm";
+import ActiveUserForm from "../ui/ActiveUserForm";
 
-function ActionsCell({ user }: { user: BankActivarActionInterface }) {
-  const [sheetOpen, setSheetOpen] = useState(false);
+interface ActionsCellProps {
+  user: UserGetAllInterface;
+  table: Table<UserGetAllInterface>;
+}
+
+function ActionsCell({ user, table }: ActionsCellProps) {
+  const [sheetOpen, setSheetOpen] = useState<boolean>(false);
+  const [sheetOpenActive, setSheetOpenActive] = useState<boolean>(false);
 
   return (
     <>
@@ -40,52 +47,49 @@ function ActionsCell({ user }: { user: BankActivarActionInterface }) {
             Copiar ID Usuario
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => setSheetOpen(true)}>
-            Ver
+          <DropdownMenuItem onClick={() => setSheetOpenActive(true)}>
+            Activar
           </DropdownMenuItem>
-          <DropdownMenuItem>Editar</DropdownMenuItem>
-          <DropdownMenuItem>Eliminar</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setSheetOpen(true)}>
+            Editar
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
       <SheetCustom
         open={sheetOpen}
         onOpenChange={setSheetOpen}
+        side="right"
         title={`Información del Usuario: ${user.usuario}`}
         description={`Detalles del usuario con ID: ${user.idUsuario}`}
       >
-        <EditUserForm user={user} />
-        <div className="space-y-4 mt-4">
-          <div>
-            <p className="font-semibold">ID Usuario:</p>
-            <p>{user.idUsuario}</p>
-          </div>
-          <div>
-            <p className="font-semibold">Usuario:</p>
-            <p>{user.usuario}</p>
-          </div>
-          <div>
-            <p className="font-semibold">Rol:</p>
-            <p>{user.rol}</p>
-          </div>
-          <div>
-            <p className="font-semibold">Sucursal:</p>
-            <p>{user.sucursal}</p>
-          </div>
-          <div>
-            <p className="font-semibold">Estado:</p>
-            <p>{user.estado ? "Activo" : "Inactivo"}</p>
-          </div>
-        </div>
+        <EditUserForm
+          user={user}
+          onClose={setSheetOpen}
+          onSuccess={() => table.options.meta?.refreshData()}
+        />
+      </SheetCustom>
+      <SheetCustom
+        open={sheetOpenActive}
+        onOpenChange={setSheetOpenActive}
+        side="right"
+        title={`Información del Usuario: ${user.usuario}`}
+        description={`Detalles del usuario con ID: ${user.idUsuario}`}
+      >
+        <ActiveUserForm
+          user={user}
+          onClose={setSheetOpenActive}
+          onSuccess={() => table.options.meta?.refreshData()}
+        />
       </SheetCustom>
     </>
   );
 }
 
-export const columns: ColumnDef<BankActivarActionInterface>[] = [
+export const columns: ColumnDef<UserGetAllInterface>[] = [
   {
     id: "actions",
-    cell: ({ row }) => {
-      return <ActionsCell user={row.original} />;
+    cell: ({ row, table }) => {
+      return <ActionsCell user={row.original} table={table} />;
     },
   },
   {

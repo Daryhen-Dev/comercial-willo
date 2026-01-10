@@ -1,24 +1,28 @@
-import { columns, Payment } from "./columns"
+'use client'
+import { columns } from "./columns"
 import { DataTable } from "./data-table"
+import { bank_activar } from "./actions/bank_activar_action"
+import { BankActivarActionInterface } from "./interfaces/bank_activar_action_interface"
+import { useEffect, useState } from "react"
 
-async function getData(): Promise<Payment[]> {
-    // Fetch data from your API here.
-    return [
-        {
-            id: "728ed52f",
-            amount: 100,
-            status: "pending",
-            email: "m@example.com",
-        },
-        // ...
-    ]
-}
+export default function DemoPage() {
+    const [data, setData] = useState<BankActivarActionInterface[]>([])
 
-export default async function DemoPage() {
-    const data = await getData()
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data2 = await bank_activar()
+                setData(data2)
+            } catch (error) {
+                console.error('Error fetching data:', error)
+                setData([])
+            }
+        }
+        fetchData()
+    }, [])
 
     return (
-        <div className="container mx-auto py-10">
+        <div className="mx-auto py-2">
             <DataTable columns={columns} data={data} />
         </div>
     )
