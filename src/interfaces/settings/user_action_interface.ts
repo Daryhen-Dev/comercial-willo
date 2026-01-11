@@ -19,3 +19,11 @@ export interface UserActiveInterface {
   idUsuario: number;
   estado: boolean;
 }
+
+export interface UserCreateInterface {
+  idLocal: number;
+  usuarioRolId: number;
+  usuario: string;
+  password: string;
+  rolUsuario: string;
+}

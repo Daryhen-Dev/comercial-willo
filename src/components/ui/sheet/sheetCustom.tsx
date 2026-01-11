@@ -30,7 +30,10 @@ export default function SheetCustom({
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       {trigger && <SheetTrigger asChild>{trigger}</SheetTrigger>}
-      <SheetContent className="w-[250px] sm:w-[700px] p-5" side={side}>
+      <SheetContent
+        className="w-[250px] sm:w-[700px] p-5 overflow-y-auto"
+        side={side}
+      >
         <SheetHeader>
           <SheetTitle>{title}</SheetTitle>
           <SheetDescription>{description}</SheetDescription>

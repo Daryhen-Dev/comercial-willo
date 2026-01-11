@@ -2,24 +2,29 @@ import { AxiosError, AxiosResponse } from "axios";
 
 export interface FetchResponse {
   Success: boolean;
+  Message: string;
   Data: any;
-  status: string;
-  statusText: string;
+  Status: string;
+  StatusText: string;
 }
 
 export const formatFetchResponse = (response: AxiosResponse): FetchResponse => {
   return {
-    Success: response.data.Success,
-    Data: response.data,
-    status: response.status.toString(),
-    statusText: response.statusText,
+    Success: response.data.success,
+    Message: response.data.message,
+    Data: response.data.data,
+    Status: response.status.toString(),
+    StatusText: response.statusText,
   };
 };
-export const formatFetchResponseError = (error: AxiosError): FetchResponse => {
+export const formatFetchResponseError = (
+  error: AxiosError<any>
+): FetchResponse => {
   return {
     Success: false,
-    Data: error.response?.data,
-    status: error.response?.status.toString() || "",
-    statusText: error.response?.statusText || "",
+    Message: error.response?.data?.message,
+    Data: error.response?.data?.data,
+    Status: error.response?.status.toString() || "",
+    StatusText: error.response?.statusText || "",
   };
 };

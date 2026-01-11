@@ -62,8 +62,7 @@ export default function ActiveUserForm({ user, onClose, onSuccess }: Props) {
     };
     const response = (await user_active(data)) as FetchResponse;
     setLoading(false);
-    console.log(response.statusText);
-    if (response.statusText === "OK") {
+    if (response.StatusText === "OK") {
       toast.success("Usuario actualizado.");
       if (onSuccess) onSuccess();
       onClose(false);

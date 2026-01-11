@@ -3,11 +3,26 @@ import { api } from "@/lib/fetch-setting";
 import { FetchResponse, formatFetchResponseError } from "@/lib/fetch-response";
 import { AxiosError } from "axios";
 import { formatFetchResponse } from "@/lib/fetch-response";
-import { UserActiveInterface, UserUpdatedInterface } from "@/interfaces";
+import {
+  UserActiveInterface,
+  UserCreateInterface,
+  UserUpdatedInterface,
+} from "@/interfaces";
 
 export const user_get_all = async (): Promise<FetchResponse> => {
   try {
     const response = await api.get("/api/UserCad/GetAllUser");
+    return formatFetchResponse(response);
+  } catch (error) {
+    return formatFetchResponseError(error as AxiosError);
+  }
+};
+
+export const user_create = async (
+  user: UserCreateInterface
+): Promise<FetchResponse> => {
+  try {
+    const response = await api.post("/api/UserCad/CreatedUser", user);
     return formatFetchResponse(response);
   } catch (error) {
     return formatFetchResponseError(error as AxiosError);
