@@ -20,13 +20,13 @@ const Setting = () => {
         <FieldSeparator />
         <div className="grid grid-cols-1 gap-4 place-content-center place-items-center md:grid-cols-2 lg:grid-cols-3">
           <ItemLink
-            title="ACTIVAR BANCO"
-            link="/setting/bank_activar"
+            title="BANCOS"
+            link="/setting/bank_setting"
             icon={Landmark}
           />
           <ItemLink
             title="NUMERACION DE CHEQUE"
-            link="/setting/bank"
+            link="/setting/bank_cheque_setting"
             icon={Banknote}
           />
           <ItemLink
@@ -70,12 +70,12 @@ const Setting = () => {
         <div className="grid grid-cols-1 gap-4 place-content-center place-items-center md:grid-cols-2 lg:grid-cols-3">
           <ItemLink
             title="IP SUCURSAL"
-            link="/setting/bank"
+            link="/setting/ip_camera"
             icon={PackagePlus}
           />
           <ItemLink
             title="IP CAMARA"
-            link="/setting/bank"
+            link="/setting/ip_camera"
             icon={PackageCheck}
           />
           <ItemLink

@@ -9,7 +9,14 @@ import {
   useReactTable,
   SortingState,
   getSortedRowModel,
+  RowData,
 } from "@tanstack/react-table";
+
+declare module "@tanstack/table-core" {
+  interface TableMeta<TData extends RowData> {
+    refreshData: () => void;
+  }
+}
 
 import {
   Table,
@@ -25,11 +32,13 @@ import { Input } from "@/components/ui/input";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  refreshData: () => void;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  refreshData,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -46,16 +55,19 @@ export function DataTable<TData, TValue>({
       sorting,
       columnFilters,
     },
+    meta: {
+      refreshData,
+    },
   });
 
   return (
     <div>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filtro por usuario..."
-          value={(table.getColumn("usuario")?.getFilterValue() as string) ?? ""}
+          placeholder="Filtro por banco..."
+          value={(table.getColumn("nombre")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("usuario")?.setFilterValue(event.target.value)
+            table.getColumn("nombre")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

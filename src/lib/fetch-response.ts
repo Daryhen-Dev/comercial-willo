@@ -5,7 +5,6 @@ export interface FetchResponse {
   Message: string;
   Data: any;
   Status: string;
-  StatusText: string;
 }
 
 export const formatFetchResponse = (response: AxiosResponse): FetchResponse => {
@@ -14,7 +13,6 @@ export const formatFetchResponse = (response: AxiosResponse): FetchResponse => {
     Message: response.data.message,
     Data: response.data.data,
     Status: response.status.toString(),
-    StatusText: response.statusText,
   };
 };
 export const formatFetchResponseError = (
@@ -25,6 +23,5 @@ export const formatFetchResponseError = (
     Message: error.response?.data?.message,
     Data: error.response?.data?.data,
     Status: error.response?.status.toString() || "",
-    StatusText: error.response?.statusText || "",
   };
 };

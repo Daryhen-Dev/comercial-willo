@@ -84,13 +84,12 @@ export default function EditUserForm({ user, onClose, onSuccess }: Props) {
     };
     const response = (await user_update(data)) as FetchResponse;
     setLoading(false);
-    console.log(response.StatusText);
-    if (response.StatusText === "OK") {
+    if (response.Success) {
       toast.success("Usuario actualizado.");
       if (onSuccess) onSuccess();
       onClose(false);
     } else {
-      toast.error("Error al actualizar el usuario.");
+      toast.error(`${response.Message}`);
     }
   });
   return (
