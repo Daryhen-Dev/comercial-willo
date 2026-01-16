@@ -53,12 +53,12 @@ const Setting = () => {
           />
           <ItemLink
             title="PRODUCTOS CON FORMULA"
-            link="/setting/bank"
+            link="/setting/product_formula"
             icon={Sigma}
           />
           <ItemLink
             title="PRODUCTOS MINIMO MAXIMO"
-            link="/setting/bank"
+            link="/setting/product_mm"
             icon={ArrowDownUp}
           />
         </div>
@@ -92,22 +92,23 @@ const Setting = () => {
         <div className="grid grid-cols-1 gap-4 place-content-center place-items-center md:grid-cols-2 lg:grid-cols-3">
           <ItemLink
             title="NUEVO PRODUCTO"
-            link="/setting/bank"
+            link="/setting/product_formula"
             icon={PackagePlus}
           />
           <ItemLink
-            title="ACTIVAR PRODUCTO"
-            link="/setting/bank"
-            icon={PackageCheck}
-          />
-          <ItemLink
             title="PRODUCTOS CON FORMULA"
-            link="/setting/bank"
+            link="/setting/product_formula"
             icon={Sigma}
           />
           <ItemLink
+            title="ACTIVAR PRODUCTO"
+            link="/setting/product_mm"
+            icon={PackageCheck}
+          />
+
+          <ItemLink
             title="PRODUCTOS MINIMO MAXIMO"
-            link="/setting/bank"
+            link="/setting/product_formula"
             icon={ArrowDownUp}
           />
         </div>
