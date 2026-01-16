@@ -27,51 +27,33 @@ import { sucursal_get_all } from "@/actions/sucursal/sucursal_action";
 import { Spinner } from "@/components/ui/spinner";
 import { FetchResponse } from "@/lib/fetch-response";
 import { toast } from "sonner";
-import { UserCreateInterface } from "@/interfaces";
-import { user_create } from "@/actions";
+import { IpLoginCreateInterface } from "@/interfaces";
+import { iplogin_create } from "@/actions/setting/iplogin_action";
 
-const userSchema = z
-  .object({
-    idLocal: z
-      .number()
-      .min(1, "Debe seleccionar una sucursal")
-      .refine((val) => val !== 2, {
-        message: "El valor no puede ser 2",
-      }),
-    usuarioRolId: z
-      .number()
-      .min(1, "Debe seleccionar un tipo")
-      .max(2, "Tipo de usuario no válido"),
-    usuario: z
-      .string()
-      .min(2, "El nombre de usuario debe tener al menos 2 caracteres"),
-    contrasena: z
-      .string()
-      .min(2, "La contraseña debe tener al menos 2 caracteres"),
-    confirmarContrasena: z
-      .string()
-      .min(2, "La confirmación de contraseña debe tener al menos 2 caracteres"),
-  })
-  .refine((data) => data.contrasena === data.confirmarContrasena, {
-    message: "Las contraseñas no coinciden",
-    path: ["confirmarContrasena"], // Esto hará que el error aparezca en el campo confirmarContrasena
-  });
+const ipLoginSchema = z.object({
+  idLocal: z
+    .number()
+    .min(1, "Debe seleccionar una sucursal")
+    .refine((val) => val !== 2, {
+      message: "El valor no puede ser 2",
+    }),
+  detalle: z.string().min(2, "El detalle debe tener al menos 2 caracteres"),
+  ip: z.string().min(2, "La ip debe tener al menos 2 caracteres"),
+});
 
 interface Props {
   onClose: (newValue: boolean) => void;
   onSuccess?: () => void;
 }
 
-export default function AddUserForm({ onClose, onSuccess }: Props) {
+export default function AddIpLoginForm({ onClose, onSuccess }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const form = useForm({
-    resolver: zodResolver(userSchema),
+    resolver: zodResolver(ipLoginSchema),
     defaultValues: {
       idLocal: 0,
-      usuario: "",
-      contrasena: "",
-      confirmarContrasena: "",
-      usuarioRolId: 0,
+      detalle: "",
+      ip: "",
     },
   });
 
@@ -92,17 +74,15 @@ export default function AddUserForm({ onClose, onSuccess }: Props) {
   };
   const onSubmit = form.handleSubmit(async (values) => {
     setLoading(true);
-    const data: UserCreateInterface = {
+    const data: IpLoginCreateInterface = {
       idLocal: values.idLocal,
-      usuarioRolId: values.usuarioRolId,
-      usuario: values.usuario.toUpperCase(),
-      password: values.contrasena,
-      rolUsuario: values.usuarioRolId === 1 ? "ADMINISTRADOR" : "CAJERO",
+      detalle: values.detalle,
+      ip: values.ip,
     };
-    const response = (await user_create(data)) as FetchResponse;
+    const response = (await iplogin_create(data)) as FetchResponse;
     setLoading(false);
     if (response.Success) {
-      toast.success("Usuario creado.");
+      toast.success("Ip creada.");
       if (onSuccess) onSuccess();
       onClose(false);
     } else {
@@ -149,10 +129,10 @@ export default function AddUserForm({ onClose, onSuccess }: Props) {
         />
         <FormField
           control={form.control}
-          name="usuario"
+          name="detalle"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Usuario</FormLabel>
+              <FormLabel>Detalle</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -162,64 +142,20 @@ export default function AddUserForm({ onClose, onSuccess }: Props) {
         />
         <FormField
           control={form.control}
-          name="contrasena"
+          name="ip"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Contraseña</FormLabel>
+              <FormLabel>Ip</FormLabel>
               <FormControl>
-                <Input type="password" {...field} />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="confirmarContrasena"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Confirmar Contraseña</FormLabel>
-              <FormControl>
-                <Input type="password" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="usuarioRolId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Tipo</FormLabel>
-              <Select
-                onValueChange={(val) => field.onChange(Number(val))}
-                value={
-                  field.value && field.value > 0 ? field.value.toString() : ""
-                }
-              >
-                <FormControl>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Seleccione un tipo" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="1">ADMINISTRADOR</SelectItem>
-                  <SelectItem value="2">CAJERO</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button
-          type="submit"
-          disabled={loading}
-          //disabled={!isValid}
-          //  href="/checkout"
-          className="w-full p-2 mt-5"
-        >
-          {loading ? <Spinner className="size-8" /> : "Actualizar"}
+
+        <Button type="submit" disabled={loading} className="w-full p-2 mt-5">
+          {loading ? <Spinner className="size-8" /> : "Agregar"}
         </Button>
       </form>
     </Form>

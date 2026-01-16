@@ -1,16 +1,17 @@
+import React, { useState } from "react";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import z from "zod";
-
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -18,59 +19,63 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { UserActiveInterface, UserGetAllInterface } from "@/interfaces";
-import { FetchResponse } from "@/lib/fetch-response";
-import { toast } from "sonner";
-import { user_active } from "@/actions";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { FetchResponse } from "@/lib/fetch-response";
+import { toast } from "sonner";
+import { IpLoginGetAllInterface, IpLoginUpdateInterface } from "@/interfaces";
+import { iplogin_update } from "@/actions/setting/iplogin_action";
 
-const userActiveSchema = z.object({
-  idUsuario: z.number(),
-  estado: z.boolean(),
+const ipLoginSchema = z.object({
+  ajusteIpSucursalId: z.number(),
   sucursal: z
     .string()
     .min(2, "El nombre de usuario debe tener al menos 2 caracteres"),
-  usuario: z
+  detalle: z
     .string()
     .min(2, "El nombre de usuario debe tener al menos 2 caracteres"),
+  ip: z.string().min(2, "La contraseña debe tener al menos 2 caracteres"),
 });
+
 interface Props {
-  user: UserGetAllInterface;
+  ipLogin: IpLoginGetAllInterface;
   onClose: (newValue: boolean) => void;
   onSuccess?: () => void;
 }
 
-export default function ActiveUserForm({ user, onClose, onSuccess }: Props) {
+export default function EditIpLoginForm({
+  ipLogin,
+  onClose,
+  onSuccess,
+}: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const form = useForm({
-    resolver: zodResolver(userActiveSchema),
+    resolver: zodResolver(ipLoginSchema),
     defaultValues: {
-      idUsuario: user.idUsuario,
-      estado: user.estado,
-      sucursal: user.sucursal,
-      usuario: user.usuario,
+      ajusteIpSucursalId: ipLogin.ajusteIpSucursalId,
+      sucursal: ipLogin.sucursal,
+      detalle: ipLogin.detalle,
+      ip: ipLogin.ip,
     },
   });
 
   const onSubmit = form.handleSubmit(async (values) => {
     setLoading(true);
-    const data: UserActiveInterface = {
-      idUsuario: values.idUsuario,
-      estado: values.estado,
+    const data: IpLoginUpdateInterface = {
+      ajusteIpSucursalId: values.ajusteIpSucursalId,
+      detalle: values.detalle,
+      ip: values.ip,
     };
-    const response = (await user_active(data)) as FetchResponse;
+    const response = (await iplogin_update(data)) as FetchResponse;
     setLoading(false);
     if (response.Success) {
-      toast.success("Usuario actualizado.");
+      toast.success("Ip actualizado.");
       if (onSuccess) onSuccess();
       onClose(false);
     } else {
       toast.error(`${response.Message}`);
     }
   });
-
   return (
     <Form {...form}>
       <form onSubmit={onSubmit} className="space-y-2">
@@ -89,12 +94,12 @@ export default function ActiveUserForm({ user, onClose, onSuccess }: Props) {
         />
         <FormField
           control={form.control}
-          name="usuario"
+          name="detalle"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Usuario</FormLabel>
+              <FormLabel>Detalle</FormLabel>
               <FormControl>
-                <Input {...field} disabled />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -102,24 +107,13 @@ export default function ActiveUserForm({ user, onClose, onSuccess }: Props) {
         />
         <FormField
           control={form.control}
-          name="estado"
+          name="ip"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Estado</FormLabel>
-              <Select
-                onValueChange={(val) => field.onChange(val === "true")}
-                value={field.value?.toString()}
-              >
-                <FormControl>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Seleccione un tipo" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="true">ACTIVO</SelectItem>
-                  <SelectItem value="false">INACTIVO</SelectItem>
-                </SelectContent>
-              </Select>
+              <FormLabel>Ip</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}

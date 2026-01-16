@@ -5,16 +5,17 @@ import { columns } from "./datagrid/columns";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import SheetCustom from "@/components/ui/sheet/sheetCustom";
-import { IpCameraGetAllInterface } from "@/interfaces/settings/ipcamara_action_interface";
-import { ipcamera_get_all } from "@/actions";
+import { iplogin_get_all } from "@/actions/setting/iplogin_action";
+import { IpLoginGetAllInterface } from "@/interfaces";
+import AddIpLoginForm from "./ui/AddIpLoginForm";
 
 export default function Page() {
-  const [data, setData] = useState<IpCameraGetAllInterface[]>([]);
+  const [data, setData] = useState<IpLoginGetAllInterface[]>([]);
   const [sheetOpen, setSheetOpen] = useState<boolean>(false);
 
   const fetchData = async () => {
     try {
-      const response = await ipcamera_get_all();
+      const response = await iplogin_get_all();
       if (response.Success) {
         setData(response.Data);
       } else {
@@ -40,17 +41,17 @@ export default function Page() {
           }}
           className="w-70 p-2 mt-5 mb-2"
         >
-          Crear Ip de campara
+          Crear ip para pc
         </Button>
       </div>
       <DataTable columns={columns} data={data} refreshData={fetchData} />
       <SheetCustom
         open={sheetOpen}
         onOpenChange={setSheetOpen}
-        title={`Información del Usuario`}
-        description={`Detalles del usuario con ID`}
+        title={`Crear ip para pc`}
+        description={`Formulario para crear un nuevo login ip`}
       >
-        <AddUserForm onClose={setSheetOpen} onSuccess={() => fetchData()} />
+        <AddIpLoginForm onClose={setSheetOpen} onSuccess={() => fetchData()} />
       </SheetCustom>
     </div>
   );

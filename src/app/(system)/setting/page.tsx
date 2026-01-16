@@ -70,7 +70,7 @@ const Setting = () => {
         <div className="grid grid-cols-1 gap-4 place-content-center place-items-center md:grid-cols-2 lg:grid-cols-3">
           <ItemLink
             title="IP SUCURSAL"
-            link="/setting/ip_camera"
+            link="/setting/ip_login"
             icon={PackagePlus}
           />
           <ItemLink
