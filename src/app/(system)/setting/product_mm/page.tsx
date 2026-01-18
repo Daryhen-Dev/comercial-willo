@@ -45,14 +45,14 @@ export default function Page() {
         </Button>
       </div>
       <DataTable columns={columns} data={data} refreshData={fetchData} />
-      <SheetCustom
+      {/* <SheetCustom
         open={sheetOpen}
         onOpenChange={setSheetOpen}
         title={`Información del Usuario`}
         description={`Detalles del usuario con ID`}
       >
         <AddUserForm onClose={setSheetOpen} onSuccess={() => fetchData()} />
-      </SheetCustom>
+      </SheetCustom> */}
     </div>
   );
 }

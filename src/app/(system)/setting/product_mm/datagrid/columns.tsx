@@ -15,6 +15,7 @@ import SheetCustom from "@/components/ui/sheet/sheetCustom";
 import { useState } from "react";
 import { ProductMMGetAllInterface } from "../../../../../interfaces";
 import { formatDateTime } from "@/lib/format-date";
+import EditProductMMForm from "../ui/EditProductMMForm";
 
 interface ActionsCellProps {
   product: ProductMMGetAllInterface;
@@ -38,48 +39,24 @@ function ActionsCell({ product, table }: ActionsCellProps) {
           <DropdownMenuLabel className="font-bold text-xl">
             Acciones
           </DropdownMenuLabel>
-          <DropdownMenuItem
-            onClick={() =>
-              navigator.clipboard.writeText(product.idProducto.toString())
-            }
-          >
-            Copiar ID Producto
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => setSheetOpenActive(true)}>
-            Activar
-          </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setSheetOpen(true)}>
             Editar
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      {/* <SheetCustom
+      <SheetCustom
         open={sheetOpen}
         onOpenChange={setSheetOpen}
         side="right"
-        title={`Información del Usuario: ${user.usuario}`}
-        description={`Detalles del usuario con ID: ${user.idUsuario}`}
+        title={`${product.sucursal} - ${product.producto}`}
+        description={`ID: ${product.idProducto}`}
       >
-        <EditUserForm
-          user={user}
+        <EditProductMMForm
+          product={product}
           onClose={setSheetOpen}
           onSuccess={() => table.options.meta?.refreshData()}
         />
       </SheetCustom>
-      <SheetCustom
-        open={sheetOpenActive}
-        onOpenChange={setSheetOpenActive}
-        side="right"
-        title={`Información del Usuario: ${user.usuario}`}
-        description={`Detalles del usuario con ID: ${user.idUsuario}`}
-      >
-        <ActiveUserForm
-          user={user}
-          onClose={setSheetOpenActive}
-          onSuccess={() => table.options.meta?.refreshData()}
-        />
-      </SheetCustom> */}
     </>
   );
 }

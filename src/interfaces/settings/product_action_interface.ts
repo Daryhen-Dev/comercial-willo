@@ -12,10 +12,10 @@ export interface ProductFormulaGetAllInterface {
 }
 
 export interface ProductFormulaUpdateInterface {
-  humedadSeco: string;
-  mermaAgua: string;
-  servBasico: string;
-  precio: string;
+  humedadSeco: number;
+  mermaAgua: number;
+  servBasico: number;
+  precio: number;
   idProducto: number;
 }
 
@@ -40,8 +40,8 @@ export interface ProductMMUpdateInterface {
   pMinimo: number;
   pMaximo: number;
   estadoMM: boolean;
-  humedadSeco: string;
-  mermaAgua: string;
-  servBasico: string;
-  precio: string;
+  humedadSeco: number;
+  mermaAgua: number;
+  servBasico: number;
+  precio: number;
 }

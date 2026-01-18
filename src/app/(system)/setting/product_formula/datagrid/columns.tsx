@@ -14,10 +14,11 @@ import { Button } from "@/components/ui/button";
 import SheetCustom from "@/components/ui/sheet/sheetCustom";
 import { useState } from "react";
 import { UserGetAllInterface } from "../../../../../interfaces/settings/user_action_interface";
-import EditUserForm from "../ui/EditUserForm";
+import EditUserForm from "../ui/EditProductFormulaForm";
 import ActiveUserForm from "../ui/ActiveUserForm";
 import { ProductFormulaGetAllInterface } from "@/interfaces";
 import { formatDateTime } from "@/lib/format-date";
+import EditProductFormulaForm from "../ui/EditProductFormulaForm";
 
 interface ActionsCellProps {
   product: ProductFormulaGetAllInterface;
@@ -54,19 +55,19 @@ function ActionsCell({ product, table }: ActionsCellProps) {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      {/* <SheetCustom
+      <SheetCustom
         open={sheetOpen}
         onOpenChange={setSheetOpen}
         side="right"
-        title={`Información del Usuario: ${product.usuario}`}
-        description={`Detalles del usuario con ID: ${product.idUsuario}`}
+        title={`Información de la Fórmula: ${product.producto}`}
+        description={`Sucursal: ${product.sucursal}`}
       >
-        <EditUserForm
-          user={user}
+        <EditProductFormulaForm
+          productoFormula={product}
           onClose={setSheetOpen}
           onSuccess={() => table.options.meta?.refreshData()}
         />
-      </SheetCustom> */}
+      </SheetCustom>
       {/* <SheetCustom
         open={sheetOpenActive}
         onOpenChange={setSheetOpenActive}
